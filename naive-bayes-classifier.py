@@ -256,9 +256,6 @@ if __name__ == "__main__":
         # Shuffle the dataset
         mushroom = mushroom.sample(frac=1)
 
-        mushroom = mushroom.replace("?", np.NaN)
-        mushroom = mushroom.dropna()
-
         mushroom['decision'] = mushroom['decision'].astype(int)
         mushroom['column2'] = mushroom['column2'].astype(int)
         mushroom['column3'] = mushroom['column3'].astype(int)
@@ -303,9 +300,6 @@ if __name__ == "__main__":
 
         # Shuffle the dataset
         ecoli = ecoli.sample(frac=1)
-
-        ecoli = ecoli.replace("?", np.NaN)
-        ecoli.dropna()
 
         ecoli = ecoli.drop("column1", axis="columns")
         ecoli["decision"].replace(["cp", "im", "imU", "imS", "imL", "om", "omL", "pp"], [
