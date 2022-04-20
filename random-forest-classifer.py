@@ -7,7 +7,6 @@ from sklearn.model_selection import train_test_split, KFold
 from sklearn.metrics import accuracy_score
 import sys
 
-
 class RandomForestClassifier:
     def __init__(self, num_of_trees=10, split_min=2, maximum_depth=100, num_of_feats=None):
         self.num_of_trees = num_of_trees

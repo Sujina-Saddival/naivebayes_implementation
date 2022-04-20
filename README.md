@@ -73,7 +73,7 @@ python3 knn-classifier.py mushroom
 
 # Random Forest
 ## To use Car dataset
-python3 random-forest-classifer.py car ===== Not working
+python3 random-forest-classifer.py car
 
 ## To use Breast Cancer dataset
 python3 random-forest-classifer.py breastcancer
@@ -82,7 +82,7 @@ python3 random-forest-classifer.py breastcancer
 python3 random-forest-classifer.py ecoli
 
 ## To use Letter Recognition
-python3 random-forest-classifer.py letterrecognition  ===== Not working
+python3 random-forest-classifer.py letterrecognition
 
 ## To use Mushroom
 python3 random-forest-classifer.py mushroom
