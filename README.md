@@ -38,3 +38,19 @@ python3 decision-tree-classifier.py breastcancer
 
 ## To use Mushroom
 python3 decision-tree-classifier.py mushroom
+
+# Adaboost
+## To use Car dataset
+python3 adaboost-classifier.py car
+
+## To use Breast Cancer dataset
+python3 adaboost-classifier.py breastcancer
+
+## To use Ecoli
+python3 adaboost-classifier.py ecoli
+
+## To use Letter Recognition
+python3 adaboost-classifier.py breastcancer
+
+## To use Mushroom
+python3 adaboost-classifier.py mushroom
