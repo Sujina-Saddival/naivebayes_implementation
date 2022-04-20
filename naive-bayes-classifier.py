@@ -166,8 +166,7 @@ if __name__ == "__main__":
             decision_column = 6  # Last column is treated as decision column
             accuracy = fit(car_dataset.values,
                            naive_bayes_classifier, decision_column)
-            print('Accuracy for Car Dataset: %s' % accuracy)
-            print('Mean Accuracy for Car Dataset: %.3f%%' %
+            print('Accuracy for Car Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
 
             accuracynb.append(accuracy)
@@ -206,8 +205,7 @@ if __name__ == "__main__":
             decision_column = 9  # Last column is treated as decision column
             accuracy = fit(breastcancer.values,
                            naive_bayes_classifier, decision_column)
-            print('Accuracy for Breast Cancer Dataset: %s' % accuracy)
-            print('Mean Accuracy for Breast Cancer Dataset: %.3f%%' %
+            print('Accuracy for Breast Cancer Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
 
             accuracynb.append(accuracy)
@@ -309,8 +307,7 @@ if __name__ == "__main__":
             decision_column = 22  # First column is treated as decision column
             accuracy = fit(mushroom.values,
                            naive_bayes_classifier, decision_column)
-            print('Accuracy for Mushroom Dataset: %s' % accuracy)
-            print('Mean Accuracy for Mushroom Dataset: %.3f%%' %
+            print('Accuracy for Mushroom Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
 
             accuracynb.append(accuracy)
@@ -346,8 +343,7 @@ if __name__ == "__main__":
             decision_column = 7  # Last column is treated as decision column
             accuracy = fit(ecoli.values, naive_bayes_classifier,
                            decision_column)
-            print('Accuracy for Ecoli Dataset: %s' % accuracy)
-            print('Mean Accuracy for Ecoli Dataset: %.3f%%' %
+            print('Accuracy for Ecoli Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
 
             accuracynb.append(accuracy)
@@ -404,8 +400,7 @@ if __name__ == "__main__":
             decision_column = 16  # Last column is treated as decision column
             accuracy = fit(letterrecognition.values,
                            naive_bayes_classifier, decision_column)
-            print('Accuracy for Letter Dataset Recognition: %s' % accuracy)
-            print('Mean Accuracy for Letter Dataset Recognition: %.3f%%' %
+            print('Accuracy for Letter Dataset Recognition: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
 
             accuracynb.append(accuracy)
