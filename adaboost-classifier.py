@@ -3,6 +3,7 @@ import pandas as pd
 import sys
 from sklearn.model_selection import KFold
 
+
 class AdaboostClassifer:
     def __init__(self):
         self.klass = []
@@ -25,8 +26,8 @@ class AdaboostClassifer:
 
                 # Finding best thresold frequency
                 for t in thresholds_array:
-                    
-                    polarity_level = 1 # setting the polarity by 1
+
+                    polarity_level = 1  # setting the polarity by 1
                     predictions = np.ones(num_of_samples)
                     predictions[X_column < t] = -1
 
@@ -45,7 +46,8 @@ class AdaboostClassifer:
 
             EPS = 1e-10
             klass.alpha = 0.5 * \
-                np.log((1.0 - minimum_error + EPS) / (minimum_error + EPS)) # calculating alpha
+                np.log((1.0 - minimum_error + EPS) /
+                       (minimum_error + EPS))  # calculating alpha
 
             predicted_values = klass.predict(X)
 
@@ -84,6 +86,9 @@ class DecisionTreeOneLevel:
 if __name__ == "__main__":
 
     dataset_name = sys.argv[1]
+
+    count = 0
+    accuracyadaboost = []
 
     def accuracy(y_true, y_pred):
         accuracy = np.sum(y_true == y_pred) / len(y_true)
@@ -134,13 +139,21 @@ if __name__ == "__main__":
 
                 accuracy_dataset = accuracy(predicted_values, y_test)
 
-            print('Accuracy for Car Dataset:', accuracy_dataset,  '\n')
+            accuracyadaboost.append(accuracy_dataset)
+
+            print('Accuracy for Car Dataset:', accuracy_dataset)
+
+        mean_accuracy = np.sum(accuracyadaboost)/float(len(accuracyadaboost))
+        std_dev = np.std(accuracyadaboost)
+
+        print("Standard Deviation for Car Dataset:", std_dev, " \n ")
 
     elif dataset_name == "breastcancer":
 
-        breastcancer = pd.read_csv("./dataset/breast-cancer-wisconsin.data", names=["column1", "column2", "column3", "column4", "column5", "column6", "column7", "column8", "column9", "column10", "decision"])
+        breastcancer = pd.read_csv("./dataset/breast-cancer-wisconsin.data", names=[
+                                   "column1", "column2", "column3", "column4", "column5", "column6", "column7", "column8", "column9", "column10", "decision"])
 
-        breastcancer.drop(["column7"],axis=1)
+        breastcancer.drop(["column7"], axis=1)
         breastcancer["decision"].replace([2, 4], [-1, 1], inplace=True)
 
         adaboost_model = AdaboostClassifer()
@@ -149,7 +162,8 @@ if __name__ == "__main__":
 
             breastcancer = breastcancer.sample(frac=1)
 
-            X, y = breastcancer.iloc[:,1:10].to_numpy(), breastcancer.iloc[:,10].to_numpy()
+            X, y = breastcancer.iloc[:, 1:10].to_numpy(
+            ), breastcancer.iloc[:, 10].to_numpy()
             y[y == 0] = -1
 
             kfold_adaboost = KFold(n_splits=5)
@@ -162,7 +176,14 @@ if __name__ == "__main__":
 
                 accuracy_dataset = accuracy(predicted_values, y_test)
 
-            print('Accuracy for Breast Dataset Cancer:', accuracy_dataset,  '\n')
+            print('Accuracy for Breast Cancer Dataset:', accuracy_dataset)
+
+            accuracyadaboost.append(accuracy_dataset)
+
+        mean_accuracy = np.sum(accuracyadaboost)/float(len(accuracyadaboost))
+        std_dev = np.std(accuracyadaboost)
+
+        print("Standard Deviation for Breast Cancer Dataset:", std_dev, " \n ")
 
     elif dataset_name == "mushroom":
 
@@ -219,7 +240,7 @@ if __name__ == "__main__":
 
             mushroom = mushroom.sample(frac=1)
             X, y = mushroom.iloc[:, 1:23].to_numpy(
-                 ), mushroom.iloc[:, 0].to_numpy()
+            ), mushroom.iloc[:, 0].to_numpy()
             y[y == 0] = -1
 
             kfold_adaboost = KFold(n_splits=5)
@@ -232,10 +253,17 @@ if __name__ == "__main__":
 
                 accuracy_dataset = accuracy(predicted_values, y_test)
 
-            print('Accuracy for Mushroom Cancer:', accuracy_dataset,  '\n')
+            print('Accuracy for Mushroom Cancer:', accuracy_dataset)
+
+            accuracyadaboost.append(accuracy_dataset)
+
+        mean_accuracy = np.sum(accuracyadaboost)/float(len(accuracyadaboost))
+        std_dev = np.std(accuracyadaboost)
+
+        print("Standard Deviation for Mushroom Dataset:", std_dev, " \n ")
 
     elif dataset_name == "ecoli":
-       
+
         ecoli = pd.read_csv("./dataset/ecoli.data", names=["column1", "column2", "column3", "column4",
                             "column5", "column6", "column7", "column8", "decision"], delim_whitespace=True)
 
@@ -272,34 +300,49 @@ if __name__ == "__main__":
 
                 accuracy_dataset = accuracy(predicted_values, y_test)
 
-            print('Accuracy for Ecoli dataset', accuracy_dataset,  '\n')
+            print('Accuracy for Ecoli dataset', accuracy_dataset)
+
+            accuracyadaboost.append(accuracy_dataset)
+
+        mean_accuracy = np.sum(accuracyadaboost)/float(len(accuracyadaboost))
+        std_dev = np.std(accuracyadaboost)
+
+        print("Standard Deviation for Ecoli Dataset:", std_dev, " \n ")
 
     elif dataset_name == "letterrecognition":
 
-            letterrecognition = pd.read_csv("./dataset/letter-recognition.data", names=["decision", "column2", "column3", "column4", "column5", "column6",
-                                            "column7", "column8", "column9", "column10", "column11", "column12", "column13", "column14", "column15", "column16", "column17"])
+        letterrecognition = pd.read_csv("./dataset/letter-recognition.data", names=["decision", "column2", "column3", "column4", "column5", "column6",
+                                        "column7", "column8", "column9", "column10", "column11", "column12", "column13", "column14", "column15", "column16", "column17"])
 
-            letterrecognition['decision'] = [ord(item) - 64 for item in letterrecognition['decision']]
+        letterrecognition['decision'] = [
+            ord(item) - 64 for item in letterrecognition['decision']]
 
-            adaboost_model = AdaboostClassifer()
-            for i in range(0, 10):
+        adaboost_model = AdaboostClassifer()
+        for i in range(0, 10):
 
-                letterrecognition = letterrecognition.sample(frac=1)
-                X, y = letterrecognition.iloc[:, 1:17].to_numpy(), letterrecognition.iloc[:, 0].to_numpy()
-                y[y == 0] = -1
+            letterrecognition = letterrecognition.sample(frac=1)
+            X, y = letterrecognition.iloc[:, 1:17].to_numpy(
+            ), letterrecognition.iloc[:, 0].to_numpy()
+            y[y == 0] = -1
 
-                kfold_adaboost = KFold(n_splits=5)
-                for train_index, test_index in kfold_adaboost.split(X):
-                    X_train, X_test = X[train_index, :], X[test_index, :]
-                    y_train, y_test = y[train_index], y[test_index]
+            kfold_adaboost = KFold(n_splits=5)
+            for train_index, test_index in kfold_adaboost.split(X):
+                X_train, X_test = X[train_index, :], X[test_index, :]
+                y_train, y_test = y[train_index], y[test_index]
 
-                    adaboost_model.fit(X_train, y_train)
-                    predicted_values = adaboost_model.predict(X_test)
+                adaboost_model.fit(X_train, y_train)
+                predicted_values = adaboost_model.predict(X_test)
 
-                    accuracy_dataset = accuracy(predicted_values, y_test)
+                accuracy_dataset = accuracy(predicted_values, y_test)
 
-                print('Accuracy for Letter Recognition dataset', accuracy_dataset,  '\n')
+            print('Accuracy for Letter Recognition dataset', accuracy_dataset)
+
+            accuracyadaboost.append(accuracy_dataset)
+
+        mean_accuracy = np.sum(accuracyadaboost)/float(len(accuracyadaboost))
+        std_dev = np.std(accuracyadaboost)
+
+        print("Standard Deviation for Letter Recognition Dataset:", std_dev, " \n ")
 
     else:
         print("Give proper dataset")
-

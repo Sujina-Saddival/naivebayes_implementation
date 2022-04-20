@@ -43,112 +43,53 @@ class RandomForest:
 if __name__ == "__main__":
     # Imports
     from sklearn import datasets
-    from sklearn.model_selection import train_test_split, KFold
+    from sklearn.model_selection import train_test_split
     from sklearn.metrics import accuracy_score
 
     def accuracy(y_true, y_pred):
         accuracy = np.sum(y_true == y_pred) / len(y_true)
         return accuracy
 
-    data = pd.read_csv('./dataset/mushroom.data', names=["decision", "cap-shape", "cap-surface", "cap-color", "bruises", "odor",  "gill-attachment", 
-    "gill-spacing", "gill-size", "gill-color", "stalk-shape", "stalk-root", "stalk-surface-above-ring", "stalk-surface-below-ring", 
-    "stalk-color-above-ring", "stalk-color-below-ring", "veil-type", "veil-color", "ring-number", "ring-type", "spore-print-color", 
-    "population", "habitat"])
+    data = pd.read_csv('ecoli.data', names=["Sequence", "mcg", "gvh", "lip", "chg", "aac", "alm1", "alm2", "decision"])
 
-    data["decision"].replace(["e", "p"], [0, 1], inplace = True)
-    data["cap-shape"].replace(["b", "c", "x", "f", "k", "s"], [0, 1, 2, 3, 4, 5], inplace = True)
-    data["cap-surface"].replace(["f", "g", "y", "s"], [0, 1, 2, 3], inplace = True)
-    data["cap-color"].replace(["n", "b", "c", "g", "r", "p", "u", "e", "w", "y"], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9], inplace = True)
-    data["bruises"].replace(["t", "f"], [0, 1], inplace = True)
-    data["odor"].replace(["a", "l", "c", "y", "f", "m", "n", "p", "s"], [1, 2, 3, 4, 5, 6, 7, 8, 9], inplace = True)
-    data["gill-attachment"].replace(["a", "d", "f", "n"], [0, 1, 2, 3], inplace = True)
-    data["gill-spacing"].replace(["c", "w", "d"], [0, 1, 2], inplace = True)
-    data["gill-size"].replace(["b", "n"], [0, 1], inplace = True)
-    data["gill-color"].replace(["k", "n", "b", "h", "g", "r", "o", "p", "u", "e", "w", "y"], [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], inplace = True)
-    data["stalk-shape"].replace(["e", "t"], [0, 1], inplace = True)
-    data["stalk-root"].replace(["b", "c", "u", "e", "z", "r", "?"], [1, 2, 3, 4, 5, 6, 0], inplace = True)
-    data["stalk-surface-above-ring"].replace(["f", "y", "k", "s"], [1, 2, 3, 4], inplace = True)
-    data["stalk-surface-below-ring"].replace(["f", "y", "k", "s"], [1, 2, 3, 4], inplace = True)
-    data["stalk-color-above-ring"].replace(["n", "b", "c", "g", "o", "p", "e", "w", "y"], [1,2,3,4,5,6,7,8,9], inplace = True)
-    data["stalk-color-below-ring"].replace(["n", "b", "c", "g", "o", "p", "e", "w", "y"], [1,2,3,4,5,6,7,8,9], inplace = True)
-    data["veil-type"].replace(["p", "u"], [1, 2], inplace = True)
-    data["veil-color"].replace(["n", "o", "w", "y"], [1, 2, 3, 4], inplace = True)
-    data["ring-number"].replace(["n", "o", "t"], [1, 2, 3], inplace = True)
-    data["ring-type"].replace(["c", "e", "f", "l", "n", "p", "s", "z"], [1, 2, 3, 4, 5, 6, 7, 8], inplace = True)
-    data["spore-print-color"].replace(["k", "n", "b", "h", "r", "o", "u", "w", "y"], [1,2,3,4,5,6,7,8,9], inplace = True)
-    data["population"].replace(["a", "c", "n", "s", "v", "y"], [1, 2, 3, 4, 5, 6], inplace = True)
-    data["habitat"].replace(["g", "l", "m", "p", "u", "w", "d"], [1, 2, 3, 4, 5, 6, 7], inplace = True)
+    data["decision"].replace(["cp","im","imU","imS","imL","om","omL","pp"], [0,1,2,3,4,5,6,7], inplace = True)
+    data['mcg'] = [int(item) for item in data['mcg']]
+    data['gvh'] = [int(item) for item in data['gvh']]
+    data['lip'] = [int(item) for item in data['lip']]
+    data['chg'] = [int(item) for item in data['chg']]
+    data['aac'] = [int(item) for item in data['aac']]
+    data['alm1'] = [int(item) for item in data['alm1']]
+    data['alm2'] = [int(item) for item in data['alm2']]
 
-    data["  1"] = data['decision'].astype(int)
-    data["cap-shape"] = data['cap-shape'].astype(int)
-    data["cap-surface"] = data['cap-surface'].astype(int)
-    data["cap-color"] = data['cap-color'].astype(int)
-    data["bruises"] = data['bruises'].astype(int)
-    data["odor"] = data['odor'].astype(int)
-    data["gill-attachment"] = data['gill-attachment'].astype(int)
-    data["gill-spacing"] = data['gill-spacing'].astype(int)
-    data["gill-size"] = data['gill-size'].astype(int)
-    data["gill-color"] = data['gill-color'].astype(int)
-    data["stalk-shape"] = data['stalk-shape'].astype(int)
-    data["stalk-root"] = data['stalk-root'].astype(int)
-    data["stalk-surface-above-ring"] = data['stalk-surface-above-ring'].astype(int)
-    data["stalk-surface-below-ring"] = data['stalk-surface-below-ring'].astype(int)
-    data["stalk-color-above-ring"] = data['stalk-color-above-ring'].astype(int)
-    data["stalk-color-below-ring"] = data['stalk-color-below-ring'].astype(int)
-    data["veil-type"] = data['veil-type'].astype(int)
-    data["veil-color"] = data['veil-color'].astype(int)
-    data["ring-number"] = data['ring-number'].astype(int)
-    data["ring-type"] = data['ring-type'].astype(int)
-    data["spore-print-color"] = data['spore-print-color'].astype(int)
-    data["population"] = data['population'].astype(int)
-    data["habitat"] = data['habitat'].astype(int)
+    print (data.dtypes)
+    #data['mcg'] = data['mcg'].astype(int)
+    #data['gvh'] = data['gvh'].astype(int)
+    #data['lip'] = data['lip'].astype(int)
+    #data['chg'] = data['chg'].astype(int)
+    #data['aac'] = data['aac'].astype(int)
+    #data['alm1'] = data['alm1'].astype(int)
+    #data['alm2'] = data['alm2'].astype(int)
+    #data['decision'] = data['decision'].astype(int)
 
     features = [
-        'cap-shape', 
-        'cap-surface', 
-        'cap-color', 
-        'bruises', 
-        'odor', 
-        'gill-attachment', 
-        'gill-spacing', 
-        'gill-size', 
-        'gill-color', 
-        'stalk-shape', 
-        'stalk-root', 
-        'stalk-surface-above-ring', 
-        'stalk-surface-below-ring', 
-        'stalk-color-above-ring', 
-        'stalk-color-below-ring', 
-        'veil-type', 
-        'veil-color', 
-        'ring-number', 
-        'ring-type', 
-        'spore-print-color', 
-        'population', 
-        'habitat'
+        'mcg', 'gvh', 'lip', 'chg', 'aac', 'alm1', 'alm2'
     ]
 
-    acc = []
-    for i in range(10):
-        y=data['decision']
-        X=data[features] 
+    y=data['decision']
+    X=data[features] 
 
-        y = y.to_numpy()
-        X = X.to_numpy()
- 
-        kf = KFold (n_splits= 5)
-        for train_index, test_index in kf.split(X):
-            X_train , X_test = X[train_index,:],X[test_index,:]
-            y_train , y_test = y[train_index] , y[test_index]
-        
-            clf = RandomForest(n_trees=20, max_depth=10)
+    y_arr = y.to_numpy()
+    X_arr = X.to_numpy()
 
-            clf.fit(X_train, y_train)
-            y_pred = clf.predict(X_test)
-        
-            acc.append(accuracy_score(y_pred , y_test))
-        
-        data = data.sample(frac=1)
+    X_train, X_test, y_train, y_test = train_test_split(
+        X_arr, y_arr, test_size=0.2, random_state=1234
+    )
 
+    clf = RandomForest(n_trees=10, max_depth=10)
 
-    print("Accuracy:", np.mean(acc))
+    clf.fit(X_train, y_train)
+    y_pred = clf.predict(X_test)
+    #acc = accuracy(y_test, y_pred)
+
+    acc = accuracy_score(y_test, y_pred)
+    print("Accuracy:", acc)

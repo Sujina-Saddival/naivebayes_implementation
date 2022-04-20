@@ -1,12 +1,15 @@
 from collections import Counter
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-import numpy as np, pandas as pd
-from sklearn.model_selection import KFold 
+import numpy as np
+import pandas as pd
+from sklearn.model_selection import KFold
 import sys
+
 
 def claculating_euclidean_distance(x1, x2):
     return np.sqrt(np.sum((x1 - x2) ** 2))
+
 
 class KNNClassifier:
     def __init__(self):
@@ -21,17 +24,23 @@ class KNNClassifier:
         return np.array(y_pred)
 
     def claculating_prediction(self, x):
-        element_distance = [claculating_euclidean_distance(x, x_train) for x_train in self.X_train] # computing the distance between selected value and rest points
-        k_idices = np.argsort(element_distance)[: self.k] # sort the distance
-        k_neighbor_labels = [self.y_train[i] for i in k_idices] # fetching label of k nearest neighbo
-        most_common_label = Counter(k_neighbor_labels).most_common(1) # most class label
+        # computing the distance between selected value and rest points
+        element_distance = [claculating_euclidean_distance(
+            x, x_train) for x_train in self.X_train]
+        k_idices = np.argsort(element_distance)[: self.k]  # sort the distance
+        # fetching label of k nearest neighbo
+        k_neighbor_labels = [self.y_train[i] for i in k_idices]
+        most_common_label = Counter(
+            k_neighbor_labels).most_common(1)  # most class label
         return most_common_label[0][0]
+
 
 if __name__ == "__main__":
 
     dataset_name = sys.argv[1]
     accuracy = []
-    
+    accuracyknn = []
+
     if dataset_name == "car":
 
         filename = './dataset/car.data'
@@ -67,51 +76,66 @@ if __name__ == "__main__":
             car_dataset = car_dataset.sample(frac=1)
 
             knn_classifier = KNNClassifier()
-            X = car_dataset.drop(["decision"], axis = 1).to_numpy()
+            X = car_dataset.drop(["decision"], axis=1).to_numpy()
             y = car_dataset.decision.to_numpy()
 
-            kfold_knn = KFold(n_splits = 5)
+            kfold_knn = KFold(n_splits=5)
 
-            for train_index , test_index in kfold_knn.split(X):
-                X_train , X_test = X[train_index,:],X[test_index,:]
-                y_train , y_test = y[train_index] , y[test_index]
-        
-                knn_classifier.fit(X_train,y_train)
+            for train_index, test_index in kfold_knn.split(X):
+                X_train, X_test = X[train_index, :], X[test_index, :]
+                y_train, y_test = y[train_index], y[test_index]
+
+                knn_classifier.fit(X_train, y_train)
                 predicted_values = knn_classifier.predict(X_test)
-        
-                accuracy.append(accuracy_score(predicted_values , y_test))
+
+                accuracy.append(accuracy_score(predicted_values, y_test))
 
             print('Mean Accuracy for Car Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
 
+            accuracyknn.append(accuracy)
+
+        mean_accuracy = np.sum(accuracyknn)/float(len(accuracyknn))
+        std_dev = np.std(accuracyknn)
+
+        print("Standard Deviation for Car Dataset:", std_dev, " \n ")
+
     elif dataset_name == "breastcancer":
 
-        breastcancer = pd.read_csv("./dataset/breast-cancer-wisconsin.data", names=["column1", "column2", "column3", "column4", "column5", "column6", "column7", "column8", "column9", "column10", "decision"])
+        breastcancer = pd.read_csv("./dataset/breast-cancer-wisconsin.data", names=[
+                                   "column1", "column2", "column3", "column4", "column5", "column6", "column7", "column8", "column9", "column10", "decision"])
 
-        breastcancer.drop(["column7"],axis=1)
+        breastcancer.drop(["column7"], axis=1)
         breastcancer["decision"].replace([2, 4], [-1, 1], inplace=True)
-        
+
         for i in range(10):
 
             breastcancer = breastcancer.sample(frac=1)
 
             knn_classifier = KNNClassifier()
-            X = breastcancer.drop(["decision"], axis = 1).to_numpy()
+            X = breastcancer.drop(["decision"], axis=1).to_numpy()
             y = breastcancer.decision.to_numpy()
 
-            kfold_knn = KFold(n_splits = 5)
+            kfold_knn = KFold(n_splits=5)
 
-            for train_index , test_index in kfold_knn.split(X):
-                X_train , X_test = X[train_index,:],X[test_index,:]
-                y_train , y_test = y[train_index] , y[test_index]
-        
-                knn_classifier.fit(X_train,y_train)
+            for train_index, test_index in kfold_knn.split(X):
+                X_train, X_test = X[train_index, :], X[test_index, :]
+                y_train, y_test = y[train_index], y[test_index]
+
+                knn_classifier.fit(X_train, y_train)
                 predicted_values = knn_classifier.predict(X_test)
-        
-                accuracy.append(accuracy_score(predicted_values , y_test))
+
+                accuracy.append(accuracy_score(predicted_values, y_test))
 
             print('Mean Accuracy for Breast Cancer Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
+
+            accuracyknn.append(accuracy)
+
+        mean_accuracy = np.sum(accuracyknn)/float(len(accuracyknn))
+        std_dev = np.std(accuracyknn)
+
+        print("Standard Deviation for Breast Cancer Dataset:", std_dev, " \n ")
 
     elif dataset_name == "mushroom":
 
@@ -189,7 +213,8 @@ if __name__ == "__main__":
         mushroom['veil-color'] = mushroom['veil-color'].astype(int)
         mushroom['ring-number'] = mushroom['ring-number'].astype(int)
         mushroom['ring-type'] = mushroom['ring-type'].astype(int)
-        mushroom['spore-print-color'] = mushroom['spore-print-color'].astype(int)
+        mushroom['spore-print-color'] = mushroom['spore-print-color'].astype(
+            int)
         mushroom['population'] = mushroom['population'].astype(int)
         mushroom['habitat'] = mushroom['habitat'].astype(int)
 
@@ -198,22 +223,29 @@ if __name__ == "__main__":
             mushroom = mushroom.sample(frac=1)
 
             knn_classifier = KNNClassifier()
-            X = mushroom.drop(["decision"], axis = 1).to_numpy()
+            X = mushroom.drop(["decision"], axis=1).to_numpy()
             y = mushroom.decision.to_numpy()
 
-            kfold_knn = KFold(n_splits = 5)
+            kfold_knn = KFold(n_splits=5)
 
-            for train_index , test_index in kfold_knn.split(X):
-                X_train , X_test = X[train_index,:],X[test_index,:]
-                y_train , y_test = y[train_index] , y[test_index]
-        
-                knn_classifier.fit(X_train,y_train)
+            for train_index, test_index in kfold_knn.split(X):
+                X_train, X_test = X[train_index, :], X[test_index, :]
+                y_train, y_test = y[train_index], y[test_index]
+
+                knn_classifier.fit(X_train, y_train)
                 predicted_values = knn_classifier.predict(X_test)
-        
-                accuracy.append(accuracy_score(predicted_values , y_test))
+
+                accuracy.append(accuracy_score(predicted_values, y_test))
 
             print('Mean Accuracy for Mushroom Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
+
+        accuracyknn.append(accuracy)
+
+        mean_accuracy = np.sum(accuracyknn)/float(len(accuracyknn))
+        std_dev = np.std(accuracyknn)
+
+        print("Standard Deviation for Mushroom Dataset:", std_dev, " \n ")
 
     elif dataset_name == "ecoli":
 
@@ -241,22 +273,29 @@ if __name__ == "__main__":
             ecoli = ecoli.sample(frac=1)
 
             knn_classifier = KNNClassifier()
-            X = ecoli.drop(["decision"], axis = 1).to_numpy()
+            X = ecoli.drop(["decision"], axis=1).to_numpy()
             y = ecoli.decision.to_numpy()
 
-            kfold_knn = KFold(n_splits = 5)
+            kfold_knn = KFold(n_splits=5)
 
-            for train_index , test_index in kfold_knn.split(X):
-                X_train , X_test = X[train_index,:],X[test_index,:]
-                y_train , y_test = y[train_index] , y[test_index]
-        
-                knn_classifier.fit(X_train,y_train)
+            for train_index, test_index in kfold_knn.split(X):
+                X_train, X_test = X[train_index, :], X[test_index, :]
+                y_train, y_test = y[train_index], y[test_index]
+
+                knn_classifier.fit(X_train, y_train)
                 predicted_values = knn_classifier.predict(X_test)
-        
-                accuracy.append(accuracy_score(predicted_values , y_test))
+
+                accuracy.append(accuracy_score(predicted_values, y_test))
 
             print('Mean Accuracy for Ecoli Dataset: ',
                   (sum(accuracy)/float(len(accuracy))), '% \n')
+
+            accuracyknn.append(accuracy)
+
+        mean_accuracy = np.sum(accuracyknn)/float(len(accuracyknn))
+        std_dev = np.std(accuracyknn)
+
+        print("Standard Deviation for Ecoli Dataset:", std_dev, " \n ")
 
     elif dataset_name == "letterrecognition":
 
@@ -295,28 +334,35 @@ if __name__ == "__main__":
             int)
         letterrecognition['column17'] = letterrecognition['column10'].astype(
             int)
-    
-    for i in range(10):
+
+        for i in range(10):
 
             letterrecognition = letterrecognition.sample(frac=1)
 
             knn_classifier = KNNClassifier()
-            X = letterrecognition.drop(["decision"], axis = 1).to_numpy()
+            X = letterrecognition.drop(["decision"], axis=1).to_numpy()
             y = letterrecognition.decision.to_numpy()
 
-            kfold_knn = KFold(n_splits = 5)
+            kfold_knn = KFold(n_splits=5)
 
-            for train_index , test_index in kfold_knn.split(X):
-                X_train , X_test = X[train_index,:],X[test_index,:]
-                y_train , y_test = y[train_index] , y[test_index]
-        
-                knn_classifier.fit(X_train,y_train)
+            for train_index, test_index in kfold_knn.split(X):
+                X_train, X_test = X[train_index, :], X[test_index, :]
+                y_train, y_test = y[train_index], y[test_index]
+
+                knn_classifier.fit(X_train, y_train)
                 predicted_values = knn_classifier.predict(X_test)
-        
-                accuracy.append(accuracy_score(predicted_values , y_test))
+
+                accuracy.append(accuracy_score(predicted_values, y_test))
 
             print('Mean Accuracy for Letter Recognization Dataset: ',
-                  (sum(accuracy)/float(len(accuracy))), '% \n')
+                (sum(accuracy)/float(len(accuracy))), '% \n')
+
+            accuracyknn.append(accuracy)
+
+        mean_accuracy = np.sum(accuracyknn)/float(len(accuracyknn))
+        std_dev = np.std(accuracyknn)
+
+        print("Standard Deviation for Letter Recignization Dataset:", std_dev, " \n ")
 
     else:
         print("Give proper dataset")

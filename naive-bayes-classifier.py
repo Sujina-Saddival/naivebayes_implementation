@@ -129,6 +129,8 @@ if __name__ == "__main__":
 
     dataset_name = sys.argv[1]
 
+    accuracynb = []
+
     if dataset_name == "car":
         filename = './dataset/car.data'
 
@@ -168,6 +170,13 @@ if __name__ == "__main__":
             print('Mean Accuracy for Car Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
 
+            accuracynb.append(accuracy)
+
+        mean_accuracy = np.sum(accuracynb)/float(len(accuracynb))
+        std_dev = np.std(accuracynb)
+
+        print("Standard Deviation for Car Dataset:", std_dev, " \n ")
+
     elif dataset_name == "breastcancer":
 
         breastcancer = pd.read_csv("./dataset/breast-cancer-wisconsin.data", names=[
@@ -200,6 +209,13 @@ if __name__ == "__main__":
             print('Accuracy for Breast Cancer Dataset: %s' % accuracy)
             print('Mean Accuracy for Breast Cancer Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
+
+            accuracynb.append(accuracy)
+
+        mean_accuracy = np.sum(accuracynb)/float(len(accuracynb))
+        std_dev = np.std(accuracynb)
+
+        print("Standard Deviation for Breast Cancer Dataset:", std_dev, " \n ")
 
     elif dataset_name == "mushroom":
 
@@ -277,7 +293,8 @@ if __name__ == "__main__":
         mushroom['veil-color'] = mushroom['veil-color'].astype(int)
         mushroom['ring-number'] = mushroom['ring-number'].astype(int)
         mushroom['ring-type'] = mushroom['ring-type'].astype(int)
-        mushroom['spore-print-color'] = mushroom['spore-print-color'].astype(int)
+        mushroom['spore-print-color'] = mushroom['spore-print-color'].astype(
+            int)
         mushroom['population'] = mushroom['population'].astype(int)
         mushroom['habitat'] = mushroom['habitat'].astype(int)
 
@@ -295,6 +312,13 @@ if __name__ == "__main__":
             print('Accuracy for Mushroom Dataset: %s' % accuracy)
             print('Mean Accuracy for Mushroom Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
+
+            accuracynb.append(accuracy)
+
+        mean_accuracy = np.sum(accuracynb)/float(len(accuracynb))
+        std_dev = np.std(accuracynb)
+
+        print("Standard Deviation for Mushroom Dataset:", std_dev, " \n ")
 
     elif dataset_name == "ecoli":
 
@@ -325,6 +349,13 @@ if __name__ == "__main__":
             print('Accuracy for Ecoli Dataset: %s' % accuracy)
             print('Mean Accuracy for Ecoli Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
+
+            accuracynb.append(accuracy)
+
+        mean_accuracy = np.sum(accuracynb)/float(len(accuracynb))
+        std_dev = np.std(accuracynb)
+
+        print("Standard Deviation for Ecoli Dataset:", std_dev, " \n ")
 
     elif dataset_name == "letterrecognition":
 
@@ -376,6 +407,13 @@ if __name__ == "__main__":
             print('Accuracy for Letter Dataset Recognition: %s' % accuracy)
             print('Mean Accuracy for Letter Dataset Recognition: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
+
+            accuracynb.append(accuracy)
+
+        mean_accuracy = np.sum(accuracynb)/float(len(accuracynb))
+        std_dev = np.std(accuracynb)
+
+        print("Standard Deviation for Letter Recognization Dataset:", std_dev, " \n ")
 
     else:
         print("Give proper dataset")
