@@ -113,14 +113,14 @@ if __name__ == '__main__':
             return final_entropy
 
         filename = './dataset/car.data'
-        cat_dataset = pd.read_csv(r'./dataset/car.data',
+        car_dataset = pd.read_csv(r'./dataset/car.data',
                                   delimiter=",", names=(["buying", "maint", "doors", "persons", "lug_boot", "safety", "labels"]))
 
-        X = cat_dataset.drop(["labels"], axis=1)
-        y = cat_dataset["labels"]
+        X = car_dataset.drop(["labels"], axis=1)
+        y = car_dataset["labels"]
 
         for i in range(10):
-            cat_dataset = cat_dataset.sample(frac=1)
+            car_dataset = car_dataset.sample(frac=1)
 
             X_train, X_test, y_train, y_test = train_test_split(
                 X, y, test_size=0.55)

@@ -132,37 +132,37 @@ if __name__ == "__main__":
     if dataset_name == "car":
         filename = './dataset/car.data'
 
-        cat_dataset = pd.read_csv("./dataset/car.data", names=[
+        car_dataset = pd.read_csv("./dataset/car.data", names=[
                                   "buying", "maint", "doors", "persons", "lug_boot", "safety", "decision"])
 
         # Shuffle the dataset
-        cat_dataset = cat_dataset.sample(frac=1)
+        car_dataset = car_dataset.sample(frac=1)
 
-        cat_dataset["decision"].replace(
+        car_dataset["decision"].replace(
             ["unacc", "acc", "good", "vgood"], [0, 1, 2, 3], inplace=True)
-        cat_dataset["safety"].replace(
+        car_dataset["safety"].replace(
             ["low", "med", "high"], [0, 1, 2], inplace=True)
-        cat_dataset["lug_boot"].replace(
+        car_dataset["lug_boot"].replace(
             ["small", "med", "big"], [0, 1, 2], inplace=True)
-        cat_dataset["persons"].replace(["more"], [4], inplace=True)
-        cat_dataset["doors"].replace(["5more"], [6], inplace=True)
-        cat_dataset["maint"].replace(["vhigh", "high", "med", "low"], [
+        car_dataset["persons"].replace(["more"], [4], inplace=True)
+        car_dataset["doors"].replace(["5more"], [6], inplace=True)
+        car_dataset["maint"].replace(["vhigh", "high", "med", "low"], [
             4, 3, 2, 1], inplace=True)
-        cat_dataset["buying"].replace(["vhigh", "high", "med", "low"], [
+        car_dataset["buying"].replace(["vhigh", "high", "med", "low"], [
             4, 3, 2, 1], inplace=True)
 
-        cat_dataset['decision'] = cat_dataset['decision'].astype(int)
-        cat_dataset['safety'] = cat_dataset['safety'].astype(int)
-        cat_dataset['lug_boot'] = cat_dataset['lug_boot'].astype(int)
-        cat_dataset['persons'] = cat_dataset['persons'].astype(int)
-        cat_dataset['doors'] = cat_dataset['doors'].astype(int)
-        cat_dataset['maint'] = cat_dataset['maint'].astype(int)
-        cat_dataset['buying'] = cat_dataset['buying'].astype(int)
+        car_dataset['decision'] = car_dataset['decision'].astype(int)
+        car_dataset['safety'] = car_dataset['safety'].astype(int)
+        car_dataset['lug_boot'] = car_dataset['lug_boot'].astype(int)
+        car_dataset['persons'] = car_dataset['persons'].astype(int)
+        car_dataset['doors'] = car_dataset['doors'].astype(int)
+        car_dataset['maint'] = car_dataset['maint'].astype(int)
+        car_dataset['buying'] = car_dataset['buying'].astype(int)
 
         # Naive Bayes Classifier
         for i in range(10):
             decision_column = 6  # Last column is treated as decision column
-            accuracy = fit(cat_dataset.values,
+            accuracy = fit(car_dataset.values,
                            naive_bayes_classifier, decision_column)
             print('Accuracy for Car Dataset: %s' % accuracy)
             print('Mean Accuracy for Car Dataset: %.3f%%' %
@@ -197,8 +197,8 @@ if __name__ == "__main__":
             decision_column = 9  # Last column is treated as decision column
             accuracy = fit(breastcancer.values,
                            naive_bayes_classifier, decision_column)
-            print('Accuracy for Breast Dataset Cancer: %s' % accuracy)
-            print('Mean Accuracy for Breast Dataset Cancer: %.3f%%' %
+            print('Accuracy for Breast Cancer Dataset: %s' % accuracy)
+            print('Mean Accuracy for Breast Cancer Dataset: %.3f%%' %
                   (sum(accuracy)/float(len(accuracy))))
 
     elif dataset_name == "mushroom":
@@ -277,7 +277,7 @@ if __name__ == "__main__":
         mushroom['veil-color'] = mushroom['veil-color'].astype(int)
         mushroom['ring-number'] = mushroom['ring-number'].astype(int)
         mushroom['ring-type'] = mushroom['ring-type'].astype(int)
-        mushroom['pore-print-color'] = mushroom['pore-print-color'].astype(int)
+        mushroom['spore-print-color'] = mushroom['spore-print-color'].astype(int)
         mushroom['population'] = mushroom['population'].astype(int)
         mushroom['habitat'] = mushroom['habitat'].astype(int)
 

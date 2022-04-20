@@ -91,37 +91,37 @@ if __name__ == "__main__":
 
     if dataset_name == "car":
 
-        cat_dataset = pd.read_csv("./dataset/car.data", names=[
+        car_dataset = pd.read_csv("./dataset/car.data", names=[
                                   "buying", "maint", "doors", "persons", "lug_boot", "safety", "decision"])
 
-        cat_dataset["decision"].replace(
+        car_dataset["decision"].replace(
             ["unacc", "acc", "good", "vgood"], [0, 1, 2, 3], inplace=True)
-        cat_dataset["safety"].replace(
+        car_dataset["safety"].replace(
             ["low", "med", "high"], [0, 1, 2], inplace=True)
-        cat_dataset["lug_boot"].replace(
+        car_dataset["lug_boot"].replace(
             ["small", "med", "big"], [0, 1, 2], inplace=True)
-        cat_dataset["persons"].replace(["more"], [4], inplace=True)
-        cat_dataset["doors"].replace(["5more"], [6], inplace=True)
-        cat_dataset["maint"].replace(["vhigh", "high", "med", "low"], [
+        car_dataset["persons"].replace(["more"], [4], inplace=True)
+        car_dataset["doors"].replace(["5more"], [6], inplace=True)
+        car_dataset["maint"].replace(["vhigh", "high", "med", "low"], [
             4, 3, 2, 1], inplace=True)
-        cat_dataset["buying"].replace(["vhigh", "high", "med", "low"], [
+        car_dataset["buying"].replace(["vhigh", "high", "med", "low"], [
             4, 3, 2, 1], inplace=True)
 
-        cat_dataset['decision'] = cat_dataset['decision'].astype(int)
-        cat_dataset['safety'] = cat_dataset['safety'].astype(int)
-        cat_dataset['lug_boot'] = cat_dataset['lug_boot'].astype(int)
-        cat_dataset['persons'] = cat_dataset['persons'].astype(int)
-        cat_dataset['doors'] = cat_dataset['doors'].astype(int)
-        cat_dataset['maint'] = cat_dataset['maint'].astype(int)
-        cat_dataset['buying'] = cat_dataset['buying'].astype(int)
+        car_dataset['decision'] = car_dataset['decision'].astype(int)
+        car_dataset['safety'] = car_dataset['safety'].astype(int)
+        car_dataset['lug_boot'] = car_dataset['lug_boot'].astype(int)
+        car_dataset['persons'] = car_dataset['persons'].astype(int)
+        car_dataset['doors'] = car_dataset['doors'].astype(int)
+        car_dataset['maint'] = car_dataset['maint'].astype(int)
+        car_dataset['buying'] = car_dataset['buying'].astype(int)
 
         adaboost_model = AdaboostClassifer()
 
         for i in range(10):
-            cat_dataset = cat_dataset.sample(frac=1)
+            car_dataset = car_dataset.sample(frac=1)
 
-            X, y = cat_dataset.iloc[:, 0:6].to_numpy(
-            ), cat_dataset.iloc[:, 6].to_numpy()
+            X, y = car_dataset.iloc[:, 0:6].to_numpy(
+            ), car_dataset.iloc[:, 6].to_numpy()
             y[y == 0] = -1
 
             kfold_adaboost = KFold(n_splits=5)
@@ -299,7 +299,6 @@ if __name__ == "__main__":
                     accuracy_dataset = accuracy(predicted_values, y_test)
 
                 print('Accuracy for Letter Recognition dataset', accuracy_dataset,  '\n')
-
 
     else:
         print("Give proper dataset")
