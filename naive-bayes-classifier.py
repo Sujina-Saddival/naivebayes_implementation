@@ -203,86 +203,89 @@ if __name__ == "__main__":
 
     elif dataset_name == "mushroom":
 
-        mushroom = pd.read_csv("./dataset/mushroom.data", names=["decision", "column2", "column3", "column4", "column5", "column6", "column7", "column8", "column9", "column10",
-                               "column11", "column12", "column13", "column14", "column15", "column16", "column17", "column18", "column19", "column20", "column21", "column22", "column23"])
+        mushroom = pd.read_csv("./dataset/mushroom.data", names=["decision", "cap-shape", "cap-surface", "cap-color", "bruises", "odor",  "gill-attachment",
+                                                                 "gill-spacing", "gill-size", "gill-color", "stalk-shape", "stalk-root", "stalk-surface-above-ring", "stalk-surface-below-ring",
+                                                                 "stalk-color-above-ring", "stalk-color-below-ring", "veil-type", "veil-color", "ring-number", "ring-type", "spore-print-color",
+                                                                 "population", "habitat"])
 
-        mushroom["decision"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column2"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column3"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column4"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column5"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column6"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column7"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column8"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column9"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column10"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column11"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column12"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column13"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column14"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column15"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column16"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column17"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column18"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column19"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column20"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column21"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column22"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
-        mushroom["column23"].replace(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"], [
-                                     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26], inplace=True)
+        mushroom["decision"].replace(["e", "p"], [0, 1], inplace=True)
+        mushroom["cap-shape"].replace(["b", "c", "x", "f",
+                                      "k", "s"], [0, 1, 2, 3, 4, 5], inplace=True)
+        mushroom["cap-surface"].replace(["f", "g",
+                                        "y", "s"], [0, 1, 2, 3], inplace=True)
+        mushroom["cap-color"].replace(["n", "b", "c", "g", "r", "p", "u", "e", "w", "y"], [
+                                      0, 1, 2, 3, 4, 5, 6, 7, 8, 9], inplace=True)
+        mushroom["bruises"].replace(["t", "f"], [0, 1], inplace=True)
+        mushroom["odor"].replace(["a", "l", "c", "y", "f", "m", "n", "p", "s"], [
+                                 1, 2, 3, 4, 5, 6, 7, 8, 9], inplace=True)
+        mushroom["gill-attachment"].replace(["a",
+                                            "d", "f", "n"], [0, 1, 2, 3], inplace=True)
+        mushroom["gill-spacing"].replace(["c",
+                                         "w", "d"], [0, 1, 2], inplace=True)
+        mushroom["gill-size"].replace(["b", "n"], [0, 1], inplace=True)
+        mushroom["gill-color"].replace(["k", "n", "b", "h", "g", "r", "o", "p", "u", "e", "w", "y"], [
+                                       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], inplace=True)
+        mushroom["stalk-shape"].replace(["e", "t"], [0, 1], inplace=True)
+        mushroom["stalk-root"].replace(["b", "c", "u", "e",
+                                       "z", "r", "?"], [1, 2, 3, 4, 5, 6, 0], inplace=True)
+        mushroom["stalk-surface-above-ring"].replace(
+            ["f", "y", "k", "s"], [1, 2, 3, 4], inplace=True)
+        mushroom["stalk-surface-below-ring"].replace(
+            ["f", "y", "k", "s"], [1, 2, 3, 4], inplace=True)
+        mushroom["stalk-color-above-ring"].replace(["n", "b", "c", "g", "o", "p", "e", "w", "y"], [
+                                                   1, 2, 3, 4, 5, 6, 7, 8, 9], inplace=True)
+        mushroom["stalk-color-below-ring"].replace(["n", "b", "c", "g", "o", "p", "e", "w", "y"], [
+                                                   1, 2, 3, 4, 5, 6, 7, 8, 9], inplace=True)
+        mushroom["veil-type"].replace(["p", "u"], [1, 2], inplace=True)
+        mushroom["veil-color"].replace(["n", "o",
+                                       "w", "y"], [1, 2, 3, 4], inplace=True)
+        mushroom["ring-number"].replace(["n", "o", "t"],
+                                        [1, 2, 3], inplace=True)
+        mushroom["ring-type"].replace(["c", "e", "f", "l", "n", "p", "s", "z"], [
+                                      1, 2, 3, 4, 5, 6, 7, 8], inplace=True)
+        mushroom["spore-print-color"].replace(["k", "n", "b", "h", "r", "o", "u", "w", "y"], [
+                                              1, 2, 3, 4, 5, 6, 7, 8, 9], inplace=True)
+        mushroom["population"].replace(["a", "c", "n", "s", "v", "y"], [
+                                       1, 2, 3, 4, 5, 6], inplace=True)
+        mushroom["habitat"].replace(["g", "l", "m", "p", "u", "w", "d"], [
+                                    1, 2, 3, 4, 5, 6, 7], inplace=True)
 
         # Shuffle the dataset
         mushroom = mushroom.sample(frac=1)
 
         mushroom['decision'] = mushroom['decision'].astype(int)
-        mushroom['column2'] = mushroom['column2'].astype(int)
-        mushroom['column3'] = mushroom['column3'].astype(int)
-        mushroom['column4'] = mushroom['column4'].astype(int)
-        mushroom['column5'] = mushroom['column5'].astype(int)
-        mushroom['column6'] = mushroom['column6'].astype(int)
-        mushroom['column7'] = mushroom['column7'].astype(int)
-        mushroom['column8'] = mushroom['column8'].astype(int)
-        mushroom['column9'] = mushroom['column9'].astype(int)
-        mushroom['column10'] = mushroom['column10'].astype(int)
-        mushroom['column11'] = mushroom['column2'].astype(int)
-        mushroom['column12'] = mushroom['column2'].astype(int)
-        mushroom['column13'] = mushroom['column3'].astype(int)
-        mushroom['column14'] = mushroom['column4'].astype(int)
-        mushroom['column15'] = mushroom['column5'].astype(int)
-        mushroom['column16'] = mushroom['column6'].astype(int)
-        mushroom['column17'] = mushroom['column7'].astype(int)
-        mushroom['column18'] = mushroom['column8'].astype(int)
-        mushroom['column19'] = mushroom['column9'].astype(int)
-        mushroom['column20'] = mushroom['column10'].astype(int)
-        mushroom['column21'] = mushroom['column8'].astype(int)
-        mushroom['column22'] = mushroom['column9'].astype(int)
-        mushroom['column23'] = mushroom['column10'].astype(int)
+        mushroom['cap-shape'] = mushroom['cap-shape'].astype(int)
+        mushroom['cap-surface'] = mushroom['cap-surface'].astype(int)
+        mushroom['cap-color'] = mushroom['cap-color'].astype(int)
+        mushroom['bruises'] = mushroom['bruises'].astype(int)
+        mushroom['odor'] = mushroom['odor'].astype(int)
+        mushroom['gill-attachment'] = mushroom['gill-attachment'].astype(int)
+        mushroom['gill-spacing'] = mushroom['gill-spacing'].astype(int)
+        mushroom['gill-size'] = mushroom['gill-size'].astype(int)
+        mushroom['gill-color'] = mushroom['gill-color'].astype(int)
+        mushroom['stalk-shape'] = mushroom['stalk-shape'].astype(int)
+        mushroom['stalk-root'] = mushroom['stalk-root'].astype(int)
+        mushroom['stalk-surface-above-ring'] = mushroom['stalk-surface-above-ring'].astype(
+            int)
+        mushroom['stalk-surface-below-ring'] = mushroom['stalk-surface-below-ring'].astype(
+            int)
+        mushroom['stalk-color-above-ring'] = mushroom['stalk-color-above-ring'].astype(
+            int)
+        mushroom['stalk-color-below-ring'] = mushroom['stalk-color-below-ring'].astype(
+            int)
+        mushroom['veil-type'] = mushroom['veil-type'].astype(int)
+        mushroom['veil-color'] = mushroom['veil-color'].astype(int)
+        mushroom['ring-number'] = mushroom['ring-number'].astype(int)
+        mushroom['ring-type'] = mushroom['ring-type'].astype(int)
+        mushroom['pore-print-color'] = mushroom['pore-print-color'].astype(int)
+        mushroom['population'] = mushroom['population'].astype(int)
+        mushroom['habitat'] = mushroom['habitat'].astype(int)
 
         # Change coloumn order. Moving the decision column to the end
-        mushroom = mushroom[["column2", "column3", "column4", "column5", "column6", "column7", "column8", "column9", "column10", "column11", "column12",
-                             "column13", "column14", "column15", "column16", "column17", "column18", "column19", "column20", "column21", "column22", "column23", "decision"]]
+        mushroom = mushroom[["cap-shape", "cap-surface", "cap-color", "bruises", "odor",  "gill-attachment",
+                             "gill-spacing", "gill-size", "gill-color", "stalk-shape", "stalk-root", "stalk-surface-above-ring", "stalk-surface-below-ring",
+                             "stalk-color-above-ring", "stalk-color-below-ring", "veil-type", "veil-color", "ring-number", "ring-type", "spore-print-color",
+                             "population", "habitat", "decision"]]
 
         # Naive Bayes Classifier
         for i in range(10):
