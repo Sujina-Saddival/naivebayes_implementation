@@ -31,7 +31,7 @@ class KNNClassifier:
         # fetching label of k nearest neighbo
         k_neighbor_labels = [self.y_train[i] for i in k_idices]
         most_common_label = Counter(
-            k_neighbor_labels).most_common(1)  # most class label
+            k_neighbor_labels).most_common(1)
         return most_common_label[0][0]
 
 
@@ -373,7 +373,7 @@ if __name__ == "__main__":
                 accuracy.append(accuracy_score(predicted_values, y_test))
 
             print('Mean Accuracy for Letter Recognization Dataset: ',
-                (sum(accuracy)/float(len(accuracy))), '% \n')
+                  (sum(accuracy)/float(len(accuracy))), '% \n')
 
             accuracyknn.append(accuracy)
 

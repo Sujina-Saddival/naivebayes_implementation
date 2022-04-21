@@ -90,6 +90,7 @@ class decision_tree_classifier(estimator, mix):
                     tree, key[k].get(tree[features[k]], 0), features)
         return result
 
+
 class DecisionTreeClassifierCar(estimator, mix):
 
     def __init__(self, features):
@@ -171,6 +172,7 @@ class DecisionTreeClassifierCar(estimator, mix):
                     tree, key[k].get(tree[features[k]], 0), features)
         return result
 
+
 if __name__ == '__main__':
 
     dataset_name = sys.argv[1]
@@ -193,7 +195,7 @@ if __name__ == '__main__':
         filename = './dataset/car.data'
         car_dataset = pd.read_csv(r'./dataset/car.data',
                                   names=(["buying", "maint", "doors", "persons", "lug_boot", "safety", "labels"]))
-        
+
         X = car_dataset.drop(["labels"], axis=1)
         y = car_dataset["labels"]
 
@@ -205,7 +207,7 @@ if __name__ == '__main__':
 
             final_entropy = claculate_entropy(
                 *[i for i in Counter(y_train).values()])
-     
+
             features = {
                 'buying': 1,
                 'maint': 2,
@@ -550,7 +552,8 @@ if __name__ == '__main__':
             final_entropy = claculate_entropy(
                 *[i for i in Counter(y_train).values()])
 
-            features = {'column2': 1, 'column3': 2, 'column4': 3, 'column5': 4, 'column6': 5, 'column7': 6, 'column8': 7, 'column9': 8, 'column10': 9, 'column11': 10, 'column12' :11, 'column13': 12, 'column14': 13, 'column15': 14, 'column16': 15, 'column17': 16}
+            features = {'column2': 1, 'column3': 2, 'column4': 3, 'column5': 4, 'column6': 5, 'column7': 6, 'column8': 7, 'column9': 8,
+                        'column10': 9, 'column11': 10, 'column12': 11, 'column13': 12, 'column14': 13, 'column15': 14, 'column16': 15, 'column17': 16}
 
             id3 = decision_tree_classifier(features)
 

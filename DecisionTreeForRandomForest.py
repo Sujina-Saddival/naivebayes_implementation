@@ -1,6 +1,7 @@
 import numpy as np
 from collections import Counter
 
+
 class DecisionTree:
     def __init__(self, split_min=2, maximum_depth=100, num_of_feats=None):
         self.split_min = split_min
@@ -9,7 +10,8 @@ class DecisionTree:
         self.root = None
 
     def fit(self, X, y):
-        self.num_of_feats = X.shape[1] if not self.num_of_feats else min(self.num_of_feats, X.shape[1])
+        self.num_of_feats = X.shape[1] if not self.num_of_feats else min(
+            self.num_of_feats, X.shape[1])
         self.root = self._grow_tree(X, y)
 
     def predict(self, X):
@@ -27,13 +29,15 @@ class DecisionTree:
             leaf_value = self._most_common_label(y)
             return DecisionTreeForRandomForest(value=leaf_value)
 
-        feat_indices = np.random.choice(num_of_features, self.num_of_feats, replace=False)
+        feat_indices = np.random.choice(
+            num_of_features, self.num_of_feats, replace=False)
 
         best_feat, best_thresh = self._outcome_best(X, y, feat_indices)
 
         left_indices, right_indices = self._split(X[:, best_feat], best_thresh)
         left = self._grow_tree(X[left_indices, :], y[left_indices], depth + 1)
-        right = self._grow_tree(X[right_indices, :], y[right_indices], depth + 1)
+        right = self._grow_tree(X[right_indices, :],
+                                y[right_indices], depth + 1)
         return DecisionTreeForRandomForest(best_feat, best_thresh, left, right)
 
     def _outcome_best(self, X, y, feat_indices):
@@ -62,7 +66,8 @@ class DecisionTree:
 
         n = len(y)
         n_l, n_r = len(left_indices), len(right_indices)
-        e_l, e_r = claculate_entropy(y[left_indices]), claculate_entropy(y[right_indices])
+        e_l, e_r = claculate_entropy(
+            y[left_indices]), claculate_entropy(y[right_indices])
         child_entropy = (n_l / n) * e_l + (n_r / n) * e_r
 
         # information gain is difference in loss before vs. after split
@@ -83,11 +88,12 @@ class DecisionTree:
         return self._traverse_tree(x, node.right)
 
     def _most_common_label(self, y):
-            counter = Counter(y)
-            most_common_label = -1
-            if len(counter) != 0:
-                most_common_label = counter.most_common(1)[0][0]
-            return most_common_label
+        counter = Counter(y)
+        most_common_label = -1
+        if len(counter) != 0:
+            most_common_label = counter.most_common(1)[0][0]
+        return most_common_label
+
 
 class DecisionTreeForRandomForest:
     def __init__(
@@ -101,6 +107,7 @@ class DecisionTreeForRandomForest:
 
     def is_leaf_node(self):
         return self.value is not None
+
 
 def claculate_entropy(y):
     hist = np.bincount(y)
