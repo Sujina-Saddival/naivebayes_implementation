@@ -376,19 +376,19 @@ if __name__ == "__main__":
         letterrecognition['column9'] = letterrecognition['column9'].astype(int)
         letterrecognition['column10'] = letterrecognition['column10'].astype(
             int)
-        letterrecognition['column11'] = letterrecognition['column7'].astype(
+        letterrecognition['column11'] = letterrecognition['column11'].astype(
             int)
-        letterrecognition['column12'] = letterrecognition['column8'].astype(
+        letterrecognition['column12'] = letterrecognition['column12'].astype(
             int)
-        letterrecognition['column13'] = letterrecognition['column9'].astype(
+        letterrecognition['column13'] = letterrecognition['column13'].astype(
             int)
-        letterrecognition['column14'] = letterrecognition['column10'].astype(
+        letterrecognition['column14'] = letterrecognition['column14'].astype(
             int)
-        letterrecognition['column15'] = letterrecognition['column8'].astype(
+        letterrecognition['column15'] = letterrecognition['column15'].astype(
             int)
-        letterrecognition['column16'] = letterrecognition['column9'].astype(
+        letterrecognition['column16'] = letterrecognition['column16'].astype(
             int)
-        letterrecognition['column17'] = letterrecognition['column10'].astype(
+        letterrecognition['column17'] = letterrecognition['column17'].astype(
             int)
 
         # Change coloumn order. Moving the decision column to the end

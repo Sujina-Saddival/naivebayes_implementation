@@ -105,8 +105,26 @@ if __name__ == "__main__":
         breastcancer = pd.read_csv("./dataset/breast-cancer-wisconsin.data", names=[
                                    "column1", "column2", "column3", "column4", "column5", "column6", "column7", "column8", "column9", "column10", "decision"])
 
-        breastcancer.drop(["column7"], axis=1)
+        # breastcancer.drop(["column7"], axis=1)
         breastcancer["decision"].replace([2, 4], [-1, 1], inplace=True)
+
+        breastcancer = breastcancer.sample(frac=1)
+
+        breastcancer = breastcancer.replace("?", np.NaN)
+        breastcancer = breastcancer.dropna()
+
+        breastcancer = breastcancer.drop("column1", axis="columns")
+
+        breastcancer['column2'] = breastcancer['column2'].astype(int)
+        breastcancer['column3'] = breastcancer['column3'].astype(int)
+        breastcancer['column4'] = breastcancer['column4'].astype(int)
+        breastcancer['column5'] = breastcancer['column5'].astype(int)
+        breastcancer['column6'] = breastcancer['column6'].astype(int)
+        breastcancer['column7'] = breastcancer['column7'].astype(int)
+        breastcancer['column8'] = breastcancer['column8'].astype(int)
+        breastcancer['column9'] = breastcancer['column9'].astype(int)
+        breastcancer['column10'] = breastcancer['column10'].astype(int)
+        breastcancer['decision'] = breastcancer['decision'].astype(int)
 
         for i in range(10):
 

@@ -3,7 +3,6 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
 import sys
 from unittest import result
-from attr import attributes
 import pandas as pd
 from collections import Counter
 from math import log
@@ -91,11 +90,90 @@ class decision_tree_classifier(estimator, mix):
                     tree, key[k].get(tree[features[k]], 0), features)
         return result
 
+class DecisionTreeClassifierCar(estimator, mix):
+
+    def __init__(self, features):
+        self.target_class = "labels"
+        self.features = features
+
+    def fit(self, X, y):
+        target_class = self.target_class
+        corpus = X.assign(labels=y)
+        self.id3tree = {}
+        DecisionTreeClassifierCar.search_node(
+            corpus, self.id3tree, target_class)
+        return self
+
+    @staticmethod
+    def claculate_score(attributes, entropy, total):
+        # calculating entropy for each node
+        updated_entro_set = [claculate_entropy(*i) for i in attributes]
+        def f(x, y): return (sum(x) / total) * y
+        result = [f(i, j) for i, j in zip(attributes, updated_entro_set)]
+        return entropy - sum(result)
+
+    @staticmethod
+    def construct_branch(header, corpus, target_class):
+        # Treat each attributes as branch
+        df = pd.DataFrame(corpus.groupby(
+            [header, target_class])[target_class].count())
+        result = []
+        for i in Counter(corpus[header]).keys():
+            result.append(df.loc[i].values)
+        return result
+
+    def predict(self, X_test):
+        result = []
+        for i in X_test.itertuples():
+            result.append(DecisionTreeClassifierCar.recurring(
+                i, self.id3tree, self.features))
+        return pd.Series(result)
+
+    @classmethod
+    def search_node(klass, corpus, id3, target_class):
+        current_entropy = claculate_entropy(
+            *[i for i in Counter(corpus[target_class]).values()])
+        result = {}
+        for record in corpus.columns:
+            if record != target_class:
+                attribute = klass.construct_branch(
+                    record, corpus, target_class)
+                tree_score = klass.claculate_score(attribute, current_entropy, total=len(
+                    corpus))
+                result[record] = tree_score
+            value = max(result, key=result.__getitem__)
+        child_nodes = [i for i in Counter(corpus[value])]
+
+        id3[value] = {}
+
+        # Creating nodes using iteration process
+        for node in child_nodes:
+            child_data = corpus[corpus[value] == node]
+            if claculate_entropy(*[i for i in Counter(child_data[target_class]).values()]) != 0:
+                id3[value][node] = {}
+                klass.search_node(child_data, id3[value][node], target_class)
+            else:
+                r = Counter(child_data[target_class])
+                id3[value][node] = max(r, key=r.__getitem__)
+        return
+
+    @classmethod
+    def recurring(klass, tree, key, features):
+        if type(key) is int:
+            return "NaN"
+        elif type(key) is not dict:
+            return key
+        for k in key.keys():
+            if k in features.keys():
+                xyz = tree[features[k]]
+                abc = key[k].get(tree[features[k]])
+                result = klass.recurring(
+                    tree, key[k].get(tree[features[k]], 0), features)
+        return result
 
 if __name__ == '__main__':
 
-    dataset_name = "letterrecognition"
-    # dataset_name = sys.argv[1]
+    dataset_name = sys.argv[1]
 
     count = 0
     accuracyid3 = []
@@ -103,8 +181,8 @@ if __name__ == '__main__':
 
     if dataset_name == "car":
 
-        def claculate_entropy(classa=0, classb=0, classc=0, classd=0):
-            toal_number_of_class = [classa, classb, classc, classd]
+        def claculate_entropy(class1=0, class2=0, class3=0, class4=0):
+            toal_number_of_class = [class1, class2, class3, class4]
             final_entropy = 0
             for c in toal_number_of_class:
                 if c != 0:
@@ -114,8 +192,8 @@ if __name__ == '__main__':
 
         filename = './dataset/car.data'
         car_dataset = pd.read_csv(r'./dataset/car.data',
-                                  delimiter=",", names=(["buying", "maint", "doors", "persons", "lug_boot", "safety", "labels"]))
-
+                                  names=(["buying", "maint", "doors", "persons", "lug_boot", "safety", "labels"]))
+        
         X = car_dataset.drop(["labels"], axis=1)
         y = car_dataset["labels"]
 
@@ -127,8 +205,7 @@ if __name__ == '__main__':
 
             final_entropy = claculate_entropy(
                 *[i for i in Counter(y_train).values()])
-            print("Entropy for the training set for Car Dataset:  {}".format(
-                final_entropy))
+     
             features = {
                 'buying': 1,
                 'maint': 2,
@@ -138,7 +215,7 @@ if __name__ == '__main__':
                 'safety': 6
             }
 
-            id3 = decision_tree_classifier(features)
+            id3 = DecisionTreeClassifierCar(features)
 
             # main function trigger
             id3.fit(X_train, y_train)
@@ -148,8 +225,6 @@ if __name__ == '__main__':
             temp_arruracy = cross_val_score(
                 id3, X, y, cv=5, scoring='accuracy')
 
-            print('Accuracy for Car Dataset: %s' % temp_arruracy)
-
             for i in range(0, len(temp_arruracy)):
                 accuracyid3.append(temp_arruracy[i])
             count += 1
@@ -158,7 +233,7 @@ if __name__ == '__main__':
             std_dev = np.std(accuracyid3)
 
             print("Average Accuracy for Car Dataset: ", mean_accuracy)
-            print("Standard Deviation for Car Dataset:", std_dev, " \n ")
+        print("Standard Deviation for Car Dataset:", std_dev, " \n ")
 
     elif dataset_name == "breastcancer":
 
@@ -201,8 +276,6 @@ if __name__ == '__main__':
 
             final_entropy = claculate_entropy(
                 *[i for i in Counter(y_train).values()])
-            print("Entropy for the training set for Breast Dataset Cancer:  {}".format(
-                final_entropy))
 
             features = {'column2': 1, 'column3': 2, 'column4': 3, 'column5': 4,
                         'column6': 5, 'column7': 6, 'column8': 7, 'column9': 8, 'column10': 9}
@@ -217,8 +290,6 @@ if __name__ == '__main__':
             temp_arruracy = cross_val_score(
                 id3, X, y, cv=5, scoring='accuracy')
 
-            print('Accuracy for Breast Dataset Cancer: %s' % temp_arruracy)
-
             for i in range(0, len(temp_arruracy)):
                 accuracyid3.append(temp_arruracy[i])
             count += 1
@@ -227,7 +298,7 @@ if __name__ == '__main__':
             std_dev = np.std(accuracyid3)
 
             print("Average Accuracy for Breast Dataset Cancer: ", mean_accuracy)
-            print("Standard Deviation for Breast Dataset Cancer:", std_dev, " \n ")
+        print("Standard Deviation for Breast Dataset Cancer:", std_dev, " \n ")
 
     elif dataset_name == "ecoli":
 
@@ -268,8 +339,6 @@ if __name__ == '__main__':
 
             final_entropy = claculate_entropy(
                 *[i for i in Counter(y_train).values()])
-            print("Entropy for the training set for Ecoli Cancer:  {}".format(
-                final_entropy))
 
             features = {'column2': 1, 'column3': 2, 'column4': 3,
                         'column5': 4, 'column6': 5, 'column7': 6, 'column8': 7}
@@ -284,8 +353,6 @@ if __name__ == '__main__':
             temp_arruracy = cross_val_score(
                 id3, X, y, cv=2, scoring='accuracy')
 
-            print('Accuracy for Ecoli Cancer: %s' % temp_arruracy)
-
             for i in range(0, len(temp_arruracy)):
                 accuracyid3.append(temp_arruracy[i])
             count += 1
@@ -294,7 +361,7 @@ if __name__ == '__main__':
             std_dev = np.std(accuracyid3)
 
             print("Average Accuracy for Ecoli Cancer: ", mean_accuracy)
-            print("Standard Deviation for Ecoli Cancer:", std_dev, " \n ")
+        print("Standard Deviation for Ecoli Cancer:", std_dev, " \n ")
 
     elif dataset_name == "mushroom":
 
@@ -397,8 +464,6 @@ if __name__ == '__main__':
 
             final_entropy = claculate_entropy(
                 *[i for i in Counter(y_train).values()])
-            print("Entropy for the training set for Mushroom:  {}".format(
-                final_entropy))
 
             features = {'cap-shape': 1, 'cap-surface': 2, 'cap-color': 3, 'bruises': 4, 'odor': 5, 'gill-attachment': 6,
                         'gill-spacing': 7, 'gill-size': 8, 'gill-color': 9, 'stalk-shape': 10, 'stalk-root': 11, 'stalk-surface-above-ring': 12, 'stalk-surface-below-ring': 13,
@@ -415,8 +480,6 @@ if __name__ == '__main__':
             temp_arruracy = cross_val_score(
                 id3, X, y, cv=2, scoring='accuracy')
 
-            print('Accuracy for Mushroom: %s' % temp_arruracy)
-
             for i in range(0, len(temp_arruracy)):
                 accuracyid3.append(temp_arruracy[i])
             count += 1
@@ -425,7 +488,7 @@ if __name__ == '__main__':
             std_dev = np.std(accuracyid3)
 
             print("Average Accuracy for Mushroom: ", mean_accuracy)
-            print("Standard Deviation for Mushroom:", std_dev, " \n ")
+        print("Standard Deviation for Mushroom:", std_dev, " \n ")
 
     elif dataset_name == "letterrecognition":
 
@@ -447,19 +510,19 @@ if __name__ == '__main__':
         letterrecognition['column9'] = letterrecognition['column9'].astype(int)
         letterrecognition['column10'] = letterrecognition['column10'].astype(
             int)
-        letterrecognition['column11'] = letterrecognition['column7'].astype(
+        letterrecognition['column11'] = letterrecognition['column11'].astype(
             int)
-        letterrecognition['column12'] = letterrecognition['column8'].astype(
+        letterrecognition['column12'] = letterrecognition['column12'].astype(
             int)
-        letterrecognition['column13'] = letterrecognition['column9'].astype(
+        letterrecognition['column13'] = letterrecognition['column13'].astype(
             int)
-        letterrecognition['column14'] = letterrecognition['column10'].astype(
+        letterrecognition['column14'] = letterrecognition['column14'].astype(
             int)
-        letterrecognition['column15'] = letterrecognition['column8'].astype(
+        letterrecognition['column15'] = letterrecognition['column15'].astype(
             int)
-        letterrecognition['column16'] = letterrecognition['column9'].astype(
+        letterrecognition['column16'] = letterrecognition['column16'].astype(
             int)
-        letterrecognition['column17'] = letterrecognition['column10'].astype(
+        letterrecognition['column17'] = letterrecognition['column17'].astype(
             int)
 
         X = letterrecognition.drop(["labels"], axis=1)
@@ -486,11 +549,8 @@ if __name__ == '__main__':
 
             final_entropy = claculate_entropy(
                 *[i for i in Counter(y_train).values()])
-            print("Entropy for the training set for Letter Recognition:  {}".format(
-                final_entropy))
 
-            features = {'column2': 1, 'column3': 2, 'column4': 3,
-                        'column5': 4, 'column6': 5, 'column7': 6, 'column8': 7}
+            features = {'column2': 1, 'column3': 2, 'column4': 3, 'column5': 4, 'column6': 5, 'column7': 6, 'column8': 7, 'column9': 8, 'column10': 9, 'column11': 10, 'column12' :11, 'column13': 12, 'column14': 13, 'column15': 14, 'column16': 15, 'column17': 16}
 
             id3 = decision_tree_classifier(features)
 
@@ -502,8 +562,6 @@ if __name__ == '__main__':
             temp_arruracy = cross_val_score(
                 id3, X, y, cv=2, scoring='accuracy')
 
-            print('Accuracy for Letter Recognition: %s' % temp_arruracy)
-
             for i in range(0, len(temp_arruracy)):
                 accuracyid3.append(temp_arruracy[i])
             count += 1
@@ -512,7 +570,7 @@ if __name__ == '__main__':
             std_dev = np.std(accuracyid3)
 
             print("Average Accuracy for Letter Recognition: ", mean_accuracy)
-            print("Standard Deviation for Letter Recognition:", std_dev, " \n ")
+        print("Standard Deviation for Letter Recognition:", std_dev, " \n ")
 
     else:
         print("Give proper dataset")
